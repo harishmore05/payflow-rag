@@ -6,7 +6,7 @@ from sentence_transformers import SentenceTransformer
 BASE_DIR = Path(__file__).resolve().parent
 SEPA_FILE = BASE_DIR / '../data/EPC125-05-2025-SCT-Rulebook-version1.1.pdf'
 PDF_DIR = BASE_DIR / '../data/pdfs'
-CHROMA_DIR  = BASE_DIR / '../data/chroma'            # vector store (gitignored)
+CHROMA_DIR  = BASE_DIR / '../data/chroma'
 COLLECTION  = 'payments'
 EMBED_MODEL = 'BAAI/bge-small-en-v1.5'
 CHUNK_SIZE  = 1500
@@ -53,7 +53,7 @@ def main():
     embeddings = model.encode(docs, normalize_embeddings=True, show_progress_bar=True).tolist()
 
     client = chromadb.PersistentClient(path=CHROMA_DIR)
-    try:                               # start clean so re-runs don't duplicate
+    try:
         client.delete_collection(COLLECTION)
     except Exception:
         pass
